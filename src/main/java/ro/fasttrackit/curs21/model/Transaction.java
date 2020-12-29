@@ -1,8 +1,7 @@
 package ro.fasttrackit.curs21.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Transaction {
@@ -13,14 +12,24 @@ public class Transaction {
     private String product;
     private Type type;
     private double amount;
+    @OneToOne
+    private Account account;
+    @ManyToMany
+    private List<Category> categories;
 
-    public Transaction(String product, Type type, double amount) {
+    public Transaction() {
+    }
+
+    public Transaction(String product, Type type, double amount, Account account) {
+        this(product, type, amount, account, List.of());
+    }
+
+    public Transaction(String product, Type type, double amount, Account account, List<Category> categories) {
         this.product = product;
         this.type = type;
         this.amount = amount;
-    }
-
-    public Transaction() {
+        this.account = account;
+        this.categories = categories;
     }
 
     public String getProduct() {
@@ -45,5 +54,29 @@ public class Transaction {
 
     public void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 }

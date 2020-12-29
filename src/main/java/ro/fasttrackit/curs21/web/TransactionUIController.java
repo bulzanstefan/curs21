@@ -3,6 +3,7 @@ package ro.fasttrackit.curs21.web;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ro.fasttrackit.curs21.service.TransactionService;
 
@@ -19,6 +20,15 @@ public class TransactionUIController {
     String getTransactionsPage(Model pageModel) {
         pageModel.addAttribute("message", "From backend");
         pageModel.addAttribute("transactions", transactionService.getAll());
+        return "transactions";
+    }
+
+    @GetMapping("{transactionId}")
+    String getTransaction(Model pageModel, @PathVariable Integer transactionId) {
+        pageModel.addAttribute("message", "From backend");
+        pageModel.addAttribute("transactions", transactionService.getAll());
+        pageModel.addAttribute("showTransactionDetails", true);
+        pageModel.addAttribute("crtTransaction", transactionService.getTransaction(transactionId));
         return "transactions";
     }
 }
